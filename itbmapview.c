@@ -60,7 +60,7 @@ void refreshFromFile (const char* filename, unsigned char isPoly, Color color) {
 		if (isPoly) drawPolygon(j,points,color,1);
 		else drawPolyline(j,points,color,1);
 
-		for (j = 0 ; j < (isPoly ? nPoints : nPoints - 1) ;j++){
+		/*for (j = 0 ; j < (isPoly ? nPoints : nPoints - 1) ;j++){
 			int lawan = (j+1);
 			if (j == (nPoints-1)) lawan = 0;
 
@@ -82,7 +82,7 @@ void refreshFromFile (const char* filename, unsigned char isPoly, Color color) {
 				drawPolyline(2,clippedLine,color,1);
 
 			}
-		}
+		}*/
 		free(points);
 	}
 	close(fileno(fp));
@@ -99,35 +99,77 @@ void refreshScreen()
 	Point *tes;
 	Point center;
 	clippingWindow = (Point *) malloc(4 * sizeof(Point));
-	clippingWindow[0] = makePoint(scaleFactor*(100+left),scaleFactor*(100+up));
-	clippingWindow[1] = makePoint(scaleFactor*(100+left),scaleFactor*(200+up));
-	clippingWindow[2] = makePoint(scaleFactor*(200+left),scaleFactor*(200+up));
-	clippingWindow[3] = makePoint(scaleFactor*(200+left),scaleFactor*(100+up));
+	clippingWindow[0] = makePoint(scaleFactor*(0+left),scaleFactor*(0+up));
+	clippingWindow[1] = makePoint(scaleFactor*(0+left),scaleFactor*(1+up));
+	clippingWindow[2] = makePoint(scaleFactor*(1+left),scaleFactor*(1+up));
+	clippingWindow[3] = makePoint(scaleFactor*(1+left),scaleFactor*(0+up));
 	center = makePoint(scaleFactor*(150+left),scaleFactor*(150+up));
-	if (rotationDegree > 0) {
+	/*if (rotationDegree > 0) {
 		tes = rotateMany(center, clippingWindow, rotationDegree, 4);
 		int i;
 		for(i = 0; i < 4; i++) {
 			clippingWindow[i] = tes[i];
 		}
-	}
+	}*/
 	drawPolygon(4,clippingWindow,setColor(0,180,180),4);
 	
 	Point viewingWindow[4];
 	
-	viewingWindow[0] = makePoint(500,50);
-	viewingWindow[1] = makePoint(500,550);
+	viewingWindow[0] = makePoint(50,50);
+	viewingWindow[1] = makePoint(50,550);
 	viewingWindow[2] = makePoint(1000,550);
 	viewingWindow[3] = makePoint(1000,50);
 	
 	drawPolygon(4,viewingWindow,setColor(0,255,180),1);
 
-	if (drawBuildings) refreshFromFile("building.txt", 1, setColor(255,255,255));
-	if (drawRoads) refreshFromFile("jalan.txt", 0,setColor(255,255,0));
-	if (drawTrees) refreshFromFile("pohon.txt", 1,setColor(0,255,0));
+	//FITUR 1
+	Point featureWindow1[4];
+	
+	featureWindow1[0] = makePoint(60,60);
+	featureWindow1[1] = makePoint(60,110);
+	featureWindow1[2] = makePoint(110,110);
+	featureWindow1[3] = makePoint(110,60);
+	if (drawBuildings) {
+		drawPolygon(4,featureWindow1,setColor(0,100,180),1);
+	} else {
+		drawPolygon(4,featureWindow1,setColor(0,255,180),1);
+	}
+	
 
-	raster_fill(50, 550, 500, 1000);
-	raster_fill(scaleFactor*(100+up), scaleFactor*(200+up), scaleFactor*(100+left), scaleFactor*(200+left));
+	//Fitur 2
+	Point featureWindow2[4];
+	
+	featureWindow2[0] = makePoint(120,60);
+	featureWindow2[1] = makePoint(120,110);
+	featureWindow2[2] = makePoint(170,110);
+	featureWindow2[3] = makePoint(170,60);
+	if (drawRoads) {
+		drawPolygon(4,featureWindow2,setColor(0,100,180),1);
+	} else {
+		drawPolygon(4,featureWindow2,setColor(0,255,180),1);
+	}
+	
+	//Fitur 3
+	Point featureWindow3[4];
+	
+	featureWindow3[0] = makePoint(180,60);
+	featureWindow3[1] = makePoint(180,110);
+	featureWindow3[2] = makePoint(230,110);
+	featureWindow3[3] = makePoint(230,60);
+	if (drawTrees) {
+		drawPolygon(4,featureWindow3,setColor(0,100,180),1);
+	} else {
+		drawPolygon(4,featureWindow3,setColor(0,255,180),1);
+	}
+
+	//if (drawBuildings) refreshFromFile("building.txt", 1, setColor(255,255,255));
+	//if (drawRoads) refreshFromFile("jalan.txt", 0,setColor(255,255,0));
+	//if (drawTrees) refreshFromFile("pohon.txt", 1,setColor(0,255,0));
+
+	//raster_fill(50, 550, 500, 1000);
+	//raster_fill(scaleFactor*(100+up), scaleFactor*(200+up), scaleFactor*(100+left), scaleFactor*(200+left));
+
+	
 }
 
 
