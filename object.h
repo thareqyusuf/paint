@@ -1,0 +1,20 @@
+#include "point.h"
+// operasi pada objek
+void Add_object();
+void Select_object();
+void Delete_object();
+void Move_object();
+void ChangeSize_object();
+void ChangeObjectLayer();
+void Show_Object();
+void Hide_object();
+void Change_fillcolor();
+void Fill_object();
+void Change_fillstyle();
+void ChangeBorderWeight();
+void ChangeBorderStyle();
+void ChangeBorderColor();
+void ShowBorder();
+void HideBorder();
+void Unfill_Object();
+void ChangeName();
