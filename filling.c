@@ -1,7 +1,5 @@
 #include "filling.h"
 
-// global variable
-char available[1000][700];
 
 void init_avail() {
     for (int i = 0; i < 1000; ++i) {

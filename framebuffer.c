@@ -7,6 +7,11 @@ long int screensize = 0;
 char *fbp = 0;
 int displayWidth, displayHeight;
 
+
+// global variable
+
+char available[1000][700];
+
 /*
 Initiate connection to framebuffer
 */
@@ -82,6 +87,7 @@ void setXY (int squareSize, int x, int y, Color C) {
                         unsigned short int t = r<<11 | g << 5 | b;
                         *((unsigned short int*)(fbp + location)) = t;
                     }
+                    available[x][y] = 1;
                 } else {
                     return;
                 }

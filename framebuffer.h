@@ -13,6 +13,8 @@ long int screensize;
 char *fbp;
 int displayWidth, displayHeight;
 
+extern char available[1000][700];
+
 //basic framebuffer primitive
 void initScreen();
 void printBackground(Color C);

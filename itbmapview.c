@@ -103,7 +103,7 @@ void refreshScreen()
 	clippingWindow[1] = makePoint(scaleFactor*(0+left),scaleFactor*(1+up));
 	clippingWindow[2] = makePoint(scaleFactor*(1+left),scaleFactor*(1+up));
 	clippingWindow[3] = makePoint(scaleFactor*(1+left),scaleFactor*(0+up));
-	center = makePoint(scaleFactor*(150+left),scaleFactor*(150+up));
+	center = makePoint(scaleFactor*(500+left),scaleFactor*(150+up));
 	/*if (rotationDegree > 0) {
 		tes = rotateMany(center, clippingWindow, rotationDegree, 4);
 		int i;
