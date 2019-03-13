@@ -20,9 +20,9 @@ double up = 0;
 double scaleFactor = 1;
 int rotationDegree = 0;
 int rotationDegreeText = 0;
-unsigned char drawBuildings = 1;
-unsigned char drawRoads = 1;
-unsigned char drawTrees = 1;
+unsigned char drawBuildings = 0;
+unsigned char drawRoads = 0;
+unsigned char drawTrees = 0;
 pthread_t keypressListener;
 
 unsigned char between(int a, int b, int x) {
@@ -162,6 +162,27 @@ void refreshScreen()
 		drawPolygon(4,featureWindow3,setColor(0,255,180),1);
 	}
 
+
+	if (drawBuildings) {
+		floodFill(left, up, setColor(255, 255, 255), setColor(0,100,180));
+		Point *clippingWindow1;
+		Point *tes1;
+		Point center1;
+		clippingWindow1 = (Point *) malloc(4 * sizeof(Point));
+		clippingWindow1[0] = makePoint(scaleFactor*(0+left),scaleFactor*(0+up));
+		clippingWindow1[1] = makePoint(scaleFactor*(0+left),scaleFactor*(10+up));
+		clippingWindow1[2] = makePoint(scaleFactor*(10+left),scaleFactor*(10+up));
+		clippingWindow1[3] = makePoint(scaleFactor*(10+left),scaleFactor*(0+up));
+		center1 = makePoint(scaleFactor*(150+left),scaleFactor*(150+up));
+		/*if (rotationDegree > 0) {
+			tes = rotateMany(center, clippingWindow, rotationDegree, 4);
+			int i;
+			for(i = 0; i < 4; i++) {
+				clippingWindow[i] = tes[i];
+			}
+		}*/
+		drawPolygon(4,clippingWindow1,setColor(0,180,180),4);
+	}
 	//if (drawBuildings) refreshFromFile("building.txt", 1, setColor(255,255,255));
 	//if (drawRoads) refreshFromFile("jalan.txt", 0,setColor(255,255,0));
 	//if (drawTrees) refreshFromFile("pohon.txt", 1,setColor(0,255,0));
