@@ -20,9 +20,12 @@ double up = 0;
 double scaleFactor = 1;
 int rotationDegree = 0;
 int rotationDegreeText = 0;
+int pointCount = 0;
+unsigned char inputPress = 0;
 unsigned char fill = 0;
 unsigned char drawS = 0;
 unsigned char drawC = 0;
+unsigned char drawT = 0;
 pthread_t keypressListener;
 
 
@@ -30,6 +33,8 @@ int polyCount = 0;
 int* polyType;
 Point* polyPoints1;
 Point* polyPoints2;
+Point* points;
+Polygon* polygons;
 
 
 
@@ -195,6 +200,22 @@ void refreshScreen()
 		drawCircle(100, makePoint(left, up), 1, setColor(100, 100, 100));
 	}
 
+	if (drawT) {
+
+		int cmd = getch();
+	 	if (cmd == TOGGLE_BUILDING_KEYPRESS) {
+			points[pointCount] = makePoint(left, up);
+			pointCount++;
+			if (pointCount == 3) {
+				drawPolygon(3, points, setColor(255, 255, 255), 1);
+				drawT = !drawT;
+				pointCount = 0;
+			}
+			refreshScreen();
+		}
+
+	}
+
 	//CEK INPUT PRESSED
 
 	//if (drawBuildings) refreshFromFile("building.txt", 1, setColor(255,255,255));
@@ -221,8 +242,8 @@ void *keypressListen(void *x_void_ptr) {
 	    else if ( cmd == DOWN_KEYPRESS ) {up -= 20; refreshScreen();}
 	    else if ( cmd == ZOOMIN_KEYPRESS) {scaleFactor -= 0.1; refreshScreen();}
 	    else if ( cmd == ZOOMOUT_KEYPRESS) {scaleFactor += 0.1; refreshScreen();}
-	    else if ( cmd == TOGGLE_BUILDING_KEYPRESS) {fill = !fill; refreshScreen();}
-	    else if ( cmd == TOGGLE_ROADS_KEYPRESS) {drawS = !drawS; refreshScreen();}
+	    // else if ( cmd == TOGGLE_BUILDING_KEYPRESS) {fill = !fill; refreshScreen();}
+	    else if ( cmd == TOGGLE_ROADS_KEYPRESS) {drawT = !drawT; refreshScreen();}
 	    else if ( cmd == TOGGLE_TREES_KEYPRESS) {drawC = !drawC; refreshScreen();}
 	    else if ( cmd == ROTATE_KEYPRESS) {
 	    	rotationDegree = (rotationDegree + 10) % 360;
@@ -237,9 +258,10 @@ void programBarrier(){
 }
 
 int main() {
-	polyType = malloc(10 * sizeof(int));
-	polyPoints1 = malloc(10 * sizeof(Point));
-	polyPoints2 = malloc(10 * sizeof(Point));
+	// polyType = malloc(10 * sizeof(int));
+	// polyPoints1 = malloc(10 * sizeof(Point));
+	// polyPoints2 = malloc(10 * sizeof(Point));
+	points = malloc(10 * sizeof(Point));
 	initScreen();
 	printBackground(setColor(0,0,0));
 
