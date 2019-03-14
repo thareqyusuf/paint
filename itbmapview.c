@@ -20,10 +20,18 @@ double up = 0;
 double scaleFactor = 1;
 int rotationDegree = 0;
 int rotationDegreeText = 0;
-unsigned char drawBuildings = 0;
-unsigned char drawRoads = 0;
-unsigned char drawTrees = 0;
+unsigned char fill = 0;
+unsigned char drawS = 0;
+unsigned char drawC = 0;
 pthread_t keypressListener;
+
+
+int polyCount = 0;
+int* polyType;
+Point* polyPoints1;
+Point* polyPoints2;
+
+
 
 unsigned char between(int a, int b, int x) {
 	return x > a && x < b;
@@ -103,7 +111,7 @@ void refreshScreen()
 	clippingWindow[1] = makePoint(scaleFactor*(0+left),scaleFactor*(1+up));
 	clippingWindow[2] = makePoint(scaleFactor*(1+left),scaleFactor*(1+up));
 	clippingWindow[3] = makePoint(scaleFactor*(1+left),scaleFactor*(0+up));
-	center = makePoint(scaleFactor*(500+left),scaleFactor*(150+up));
+	center = makePoint(scaleFactor*(0+left),scaleFactor*(150+up));
 	/*if (rotationDegree > 0) {
 		tes = rotateMany(center, clippingWindow, rotationDegree, 4);
 		int i;
@@ -129,7 +137,7 @@ void refreshScreen()
 	featureWindow1[1] = makePoint(60,110);
 	featureWindow1[2] = makePoint(110,110);
 	featureWindow1[3] = makePoint(110,60);
-	if (drawBuildings) {
+	if (fill) {
 		drawPolygon(4,featureWindow1,setColor(0,100,180),1);
 	} else {
 		drawPolygon(4,featureWindow1,setColor(0,255,180),1);
@@ -143,7 +151,7 @@ void refreshScreen()
 	featureWindow2[1] = makePoint(120,110);
 	featureWindow2[2] = makePoint(170,110);
 	featureWindow2[3] = makePoint(170,60);
-	if (drawRoads) {
+	if (drawS) {
 		drawPolygon(4,featureWindow2,setColor(0,100,180),1);
 	} else {
 		drawPolygon(4,featureWindow2,setColor(0,255,180),1);
@@ -156,33 +164,39 @@ void refreshScreen()
 	featureWindow3[1] = makePoint(180,110);
 	featureWindow3[2] = makePoint(230,110);
 	featureWindow3[3] = makePoint(230,60);
-	if (drawTrees) {
+	if (drawC) {
 		drawPolygon(4,featureWindow3,setColor(0,100,180),1);
 	} else {
 		drawPolygon(4,featureWindow3,setColor(0,255,180),1);
 	}
 
 
-	if (drawBuildings) {
-		floodFill(left, up, setColor(255, 255, 255), setColor(0,100,180));
-		Point *clippingWindow1;
-		Point *tes1;
-		Point center1;
-		clippingWindow1 = (Point *) malloc(4 * sizeof(Point));
-		clippingWindow1[0] = makePoint(scaleFactor*(0+left),scaleFactor*(0+up));
-		clippingWindow1[1] = makePoint(scaleFactor*(0+left),scaleFactor*(10+up));
-		clippingWindow1[2] = makePoint(scaleFactor*(10+left),scaleFactor*(10+up));
-		clippingWindow1[3] = makePoint(scaleFactor*(10+left),scaleFactor*(0+up));
-		center1 = makePoint(scaleFactor*(150+left),scaleFactor*(150+up));
-		/*if (rotationDegree > 0) {
-			tes = rotateMany(center, clippingWindow, rotationDegree, 4);
-			int i;
-			for(i = 0; i < 4; i++) {
-				clippingWindow[i] = tes[i];
-			}
-		}*/
-		drawPolygon(4,clippingWindow1,setColor(0,180,180),4);
+	//DRAW ALL POLY
+	for (int i = 0; i< polyCount; i++) {
+		if (polyType[i] == 1) {
+			drawCircle(100, makePoint(polyPoints1[i].x, polyPoints1[i].y), 1, setColor(100, 100, 100));
+		}
 	}
+
+	//CEK PENGGUNAAN FITUR FILL
+	if (fill) {
+		floodFill(left, up, setColor(255, 255, 255), setColor(0,0,0));
+		
+	}
+
+	if (drawC) {
+		
+		polyPoints1[polyCount].x = left;
+		polyPoints1[polyCount].y = up;
+		polyType = 1;
+		
+		polyCount++;
+		drawC = !drawC;
+		drawCircle(100, makePoint(left, up), 1, setColor(100, 100, 100));
+	}
+
+	//CEK INPUT PRESSED
+
 	//if (drawBuildings) refreshFromFile("building.txt", 1, setColor(255,255,255));
 	//if (drawRoads) refreshFromFile("jalan.txt", 0,setColor(255,255,0));
 	//if (drawTrees) refreshFromFile("pohon.txt", 1,setColor(0,255,0));
@@ -207,9 +221,9 @@ void *keypressListen(void *x_void_ptr) {
 	    else if ( cmd == DOWN_KEYPRESS ) {up -= 20; refreshScreen();}
 	    else if ( cmd == ZOOMIN_KEYPRESS) {scaleFactor -= 0.1; refreshScreen();}
 	    else if ( cmd == ZOOMOUT_KEYPRESS) {scaleFactor += 0.1; refreshScreen();}
-	    else if ( cmd == TOGGLE_BUILDING_KEYPRESS) {drawBuildings = !drawBuildings; refreshScreen();}
-	    else if ( cmd == TOGGLE_ROADS_KEYPRESS) {drawRoads = !drawRoads; refreshScreen();}
-	    else if ( cmd == TOGGLE_TREES_KEYPRESS) {drawTrees = !drawTrees; refreshScreen();}
+	    else if ( cmd == TOGGLE_BUILDING_KEYPRESS) {fill = !fill; refreshScreen();}
+	    else if ( cmd == TOGGLE_ROADS_KEYPRESS) {drawS = !drawS; refreshScreen();}
+	    else if ( cmd == TOGGLE_TREES_KEYPRESS) {drawC = !drawC; refreshScreen();}
 	    else if ( cmd == ROTATE_KEYPRESS) {
 	    	rotationDegree = (rotationDegree + 10) % 360;
 	    	refreshScreen();}
@@ -223,6 +237,9 @@ void programBarrier(){
 }
 
 int main() {
+	polyType = malloc(10 * sizeof(int));
+	polyPoints1 = malloc(10 * sizeof(Point));
+	polyPoints2 = malloc(10 * sizeof(Point));
 	initScreen();
 	printBackground(setColor(0,0,0));
 

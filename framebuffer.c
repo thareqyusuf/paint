@@ -12,10 +12,20 @@ int displayWidth, displayHeight;
 
 char available[1000][700];
 
+void init_avail() {
+    for (int i = 0; i < 1000; ++i) {
+        for (int j = 0; j < 700; ++j) {
+            available[i][j] = 0;
+            // printf("%d\n", available[i][j]);
+        }
+    }
+}
+
 /*
 Initiate connection to framebuffer
 */
 void initScreen() {
+    init_avail();
     // Open the file for reading and writing
     fbfd = open("/dev/fb0", O_RDWR);
     if (fbfd == -1) {

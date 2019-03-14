@@ -16,6 +16,7 @@ int displayWidth, displayHeight;
 extern char available[1000][700];
 
 //basic framebuffer primitive
+void init_avail();
 void initScreen();
 void printBackground(Color C);
 void setXY (int squareSize, int x, int y, Color C);
