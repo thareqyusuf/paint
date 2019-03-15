@@ -298,8 +298,8 @@ void scaleDown() {
 	for (int i = 0; i < polyCount; i++) {
 		if (isInside(left, up, polygonsP[i])) {
 			for (int j = 0; j < polygonsP[i].neff; j++) {
-				polygonsP[i].p[j].x = polygonsP[i].p[j].x * 2 / 3;
-				polygonsP[i].p[j].y = polygonsP[i].p[j].y * 2 / 3;
+				polygonsP[i].p[j].x = polygonsP[i].p[j].x * 9 / 10;
+				polygonsP[i].p[j].y = polygonsP[i].p[j].y * 9 / 10;
 			}
 		}
 	}
@@ -309,8 +309,8 @@ void scaleUp() {
 	for (int i = 0; i < polyCount; i++) {
 		if (isInside(left, up, polygonsP[i])) {
 			for (int j = 0; j < polygonsP[i].neff; j++) {
-				polygonsP[i].p[j].x = polygonsP[i].p[j].x * 3 / 2;
-				polygonsP[i].p[j].y = polygonsP[i].p[j].y * 3 / 2;
+				polygonsP[i].p[j].x = polygonsP[i].p[j].x * 10 / 9;
+				polygonsP[i].p[j].y = polygonsP[i].p[j].y * 10 / 9;
 			}
 		}
 	}
