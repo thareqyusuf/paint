@@ -23,7 +23,7 @@ int pointCount = 0;
 unsigned char inputPress = 0;
 unsigned char fill = 0;
 unsigned char drawS = 0;
-unsigned char drawC = 0;
+unsigned char drawR = 0;
 unsigned char drawT = 0;
 pthread_t keypressListener;
 
@@ -156,7 +156,7 @@ void refreshScreen()
 	featureWindow2[1] = makePoint(120,110);
 	featureWindow2[2] = makePoint(170,110);
 	featureWindow2[3] = makePoint(170,60);
-	if (drawS) {
+	if (drawT) {
 		drawPolygon(4,featureWindow2,setColor(0,100,180),1);
 	} else {
 		drawPolygon(4,featureWindow2,setColor(0,255,180),1);
@@ -169,7 +169,7 @@ void refreshScreen()
 	featureWindow3[1] = makePoint(180,110);
 	featureWindow3[2] = makePoint(230,110);
 	featureWindow3[3] = makePoint(230,60);
-	if (drawC) {
+	if (drawR) {
 		drawPolygon(4,featureWindow3,setColor(0,100,180),1);
 	} else {
 		drawPolygon(4,featureWindow3,setColor(0,255,180),1);
@@ -183,25 +183,45 @@ void refreshScreen()
 	// 	}
 	// }
 
+	for (int i = 0; i < polyCount; i++) {
+		drawPolygon(polygonsP[i].neff, polygonsP[i].p, polygonsP[i].c, 1);
+	}
+
 	//CEK PENGGUNAAN FITUR FILL
 	if (fill) {
 		floodFill(left, up, setColor(255, 255, 255), setColor(0,0,0));
 		
 	}
 
-	if (drawC) {
-		
-		polyPoints1[polyCount].x = left;
-		polyPoints1[polyCount].y = up;
-		polyType = 1;
-		
-		polyCount++;
-		drawC = !drawC;
-		drawCircle(100, makePoint(left, up), 1, setColor(100, 100, 100));
-	}
+	if (drawR) {
 
-	for (int i = 0; i < polyCount; i++) {
-		drawPolygon(polygonsP[i].neff, polygonsP[i].p, polygonsP[i].c, 1);
+		int cmd = getch();
+		if (cmd == TOGGLE_BUILDING_KEYPRESS) {
+			if (pointCount == 0) {
+				points[pointCount] = makePoint(left, up);
+				pointCount++;
+			} else {
+				points[pointCount] = makePoint(points[0].x, up); pointCount++;
+				points[pointCount] = makePoint(left, up); pointCount++;
+				points[pointCount] = makePoint(left, points[0].y); pointCount++;
+
+				if (pointCount == 4) {
+					for (int i = 0; i < pointCount; i++) {
+						// polygons[polyCount][i] = points[i];
+						polygonsP[polyCount].p[i] = points[i];
+						polygonsP[polyCount].neff = pointCount;
+						polygonsP[polyCount].c = setColor(255, 255, 255);
+					}
+					for (int i = 0; i < pointCount; i++) {
+						points[i].x = NULL;
+						points[i].y = NULL;
+					}
+					pointCount = 0;
+					polyCount++;
+				}
+			}
+		}
+	
 	}
 
 	if (drawT) {
@@ -211,13 +231,16 @@ void refreshScreen()
 			points[pointCount] = makePoint(left, up);
 			pointCount++;
 			if (pointCount == 3) {
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < pointCount; i++) {
 					// polygons[polyCount][i] = points[i];
 					polygonsP[polyCount].p[i] = points[i];
-					polygonsP[polyCount].neff = 3;
+					polygonsP[polyCount].neff = pointCount;
 					polygonsP[polyCount].c = setColor(255, 255, 255);
 				}
-				drawT = !drawT;
+				for (int i = 0; i < pointCount; i++) {
+						points[i].x = NULL;
+						points[i].y = NULL;
+					}
 				pointCount = 0;
 				polyCount++;
 			}
@@ -254,7 +277,7 @@ void *keypressListen(void *x_void_ptr) {
 	    else if ( cmd == ZOOMOUT_KEYPRESS) {scaleFactor += 0.1; refreshScreen();}
 	    // else if ( cmd == TOGGLE_BUILDING_KEYPRESS) {fill = !fill; refreshScreen();}
 	    else if ( cmd == TOGGLE_ROADS_KEYPRESS) {drawT = !drawT; refreshScreen();}
-	    else if ( cmd == TOGGLE_TREES_KEYPRESS) {drawC = !drawC; refreshScreen();}
+	    else if ( cmd == TOGGLE_TREES_KEYPRESS) {drawR = !drawR; refreshScreen();}
 	    else if ( cmd == ROTATE_KEYPRESS) {
 	    	rotationDegree = (rotationDegree + 10) % 360;
 	    	refreshScreen();}
