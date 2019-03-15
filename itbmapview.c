@@ -205,7 +205,8 @@ void refreshScreen()
 
 	for (int i = 0; i < 10; i++) {
 		drawPolygon(polygonsP[i].neff, polygonsP[i].p, polygonsP[i].c, 1);
-		floodFill(pointsColor[i].x, pointsColor[i].y, pointsColorChoice[i], setColor(0, 0, 0));
+		// floodFill(pointsColor[i].x, pointsColor[i].y, pointsColorChoice[i], setColor(0, 0, 0));
+		flood(pointsColor[i].x, pointsColor[i].y, pointsColorChoice[i], setColor(0, 0, 0));
 	}
 
 	//CEK PENGGUNAAN FITUR FILL
