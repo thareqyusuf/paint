@@ -159,7 +159,7 @@ void refreshScreen()
 			clippingWindow[i] = tes[i];
 		}
 	}*/
-	drawPolygon(4,clippingWindow,setColor(0,180,180),4);
+	drawPolygon(4,clippingWindow,colors[currentColor],4);
 	
 	Point viewingWindow[4];
 	
