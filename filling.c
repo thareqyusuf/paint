@@ -1,6 +1,6 @@
 #include "filling.h"
 
-char available[1000][700];
+char available[3840][2160];
 
 
 
@@ -51,6 +51,22 @@ void floodFill(int fp_x, int fp_y, Color C, Color fc) {
                 insertPoint(pq, makePoint(p.x-1, p.y));
             }
         }
+    }
+}
+
+void flood(int x, int y, Color newColor, Color oldColor) {
+    Color thisColor = getXY(x, y);
+
+    if (isColorSame(newColor, oldColor)) {
+        return;
+    }
+
+    if (isColorSame(thisColor, oldColor)) {
+        setXY(1, x, y, newColor);
+        flood(x + 1, y, newColor, oldColor);
+        flood(x - 1, y, newColor, oldColor);
+        flood(x, y + 1, newColor, oldColor);
+        flood(x, y - 1, newColor, oldColor);
     }
 }
 

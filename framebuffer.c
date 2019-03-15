@@ -10,7 +10,7 @@ int displayWidth, displayHeight;
 
 // global variable
 
-char available[1000][700];
+char available[3840][2160];
 
 void init_avail() {
     for (int i = 0; i < 1000; ++i) {
