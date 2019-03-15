@@ -14,17 +14,19 @@ typedef struct Polygons {
 	int neff;
 } Polygon;
 
-double left = 0;
-double up = 0;
+double left = 500;
+double up = 250;
 double scaleFactor = 1;
 int rotationDegree = 0;
 int rotationDegreeText = 0;
 int pointCount = 0;
+int pointColorCount = 0;
 unsigned char inputPress = 0;
 unsigned char fill = 0;
 unsigned char drawS = 0;
 unsigned char drawR = 0;
 unsigned char drawT = 0;
+unsigned char vKey = 0;
 pthread_t keypressListener;
 
 
@@ -35,6 +37,10 @@ Point* polyPoints2;
 Point* points;
 Point* polygons[10];
 Polygon polygonsP[10];
+Color colors[4];
+int currentColor;
+Point pointsColor[10];
+Color pointsColorChoice[10];
 
 
 
@@ -175,6 +181,20 @@ void refreshScreen()
 		drawPolygon(4,featureWindow3,setColor(0,255,180),1);
 	}
 
+	//Fitur 4
+	Point featureWindow4[4];
+
+	featureWindow3[0] = makePoint(240,60);
+	featureWindow3[1] = makePoint(240,110);
+	featureWindow3[2] = makePoint(290,110);
+	featureWindow3[3] = makePoint(290,60);
+	if (vKey) {
+		drawPolygon(4,featureWindow3,setColor(0,100,180),1);
+	} else {
+		drawPolygon(4,featureWindow3,setColor(0,255,180),1);
+	}
+
+
 
 	//DRAW ALL POLY
 	// for (int i = 0; i< polyCount; i++) {
@@ -183,19 +203,24 @@ void refreshScreen()
 	// 	}
 	// }
 
-	for (int i = 0; i < polyCount; i++) {
+	for (int i = 0; i < 10; i++) {
 		drawPolygon(polygonsP[i].neff, polygonsP[i].p, polygonsP[i].c, 1);
+		floodFill(pointsColor[i].x, pointsColor[i].y, pointsColorChoice[i], setColor(0, 0, 0));
 	}
 
 	//CEK PENGGUNAAN FITUR FILL
 	if (fill) {
-		floodFill(left, up, setColor(255, 255, 255), setColor(0,0,0));
-		
+		pointsColor[pointColorCount].x = left;
+		pointsColor[pointColorCount].y = up;
+		pointsColorChoice[pointColorCount] = colors[currentColor];
+		pointColorCount++;
+		fill = !fill;
+		refreshScreen();
 	}
 
 	if (drawR) {
-
 		int cmd = getch();
+
 		if (cmd == SPACE_KEYPRESS) {
 			if (pointCount == 0) {
 				points[pointCount] = makePoint(left, up);
@@ -210,7 +235,7 @@ void refreshScreen()
 						// polygons[polyCount][i] = points[i];
 						polygonsP[polyCount].p[i] = points[i];
 						polygonsP[polyCount].neff = pointCount;
-						polygonsP[polyCount].c = setColor(255, 255, 255);
+						polygonsP[polyCount].c = colors[currentColor];
 					}
 					for (int i = 0; i < pointCount; i++) {
 						points[i].x = NULL;
@@ -218,15 +243,15 @@ void refreshScreen()
 					}
 					pointCount = 0;
 					polyCount++;
+					refreshScreen();
 				}
 			}
 		}
-	
 	}
 
 	if (drawT) {
-
 		int cmd = getch();
+
 	 	if (cmd == SPACE_KEYPRESS) {
 			points[pointCount] = makePoint(left, up);
 			pointCount++;
@@ -235,7 +260,7 @@ void refreshScreen()
 					// polygons[polyCount][i] = points[i];
 					polygonsP[polyCount].p[i] = points[i];
 					polygonsP[polyCount].neff = pointCount;
-					polygonsP[polyCount].c = setColor(255, 255, 255);
+					polygonsP[polyCount].c = colors[currentColor];
 				}
 				for (int i = 0; i < pointCount; i++) {
 						points[i].x = NULL;
@@ -243,6 +268,7 @@ void refreshScreen()
 					}
 				pointCount = 0;
 				polyCount++;
+				refreshScreen();
 			}
 		}
 	}
@@ -270,17 +296,35 @@ void *keypressListen(void *x_void_ptr) {
 	 {
 	 	cmd = getch();
 	 	if (cmd == LEFT_KEYPRESS) { left -= 20; refreshScreen();}
-	    else if ( cmd == RIGHT_KEYPRESS) {	left+= 20;refreshScreen();	}
-	    else if ( cmd == UP_KEYPRESS ) {up += 20; refreshScreen();}
-	    else if ( cmd == DOWN_KEYPRESS ) {up -= 20; refreshScreen();}
-	    else if ( cmd == ZOOMIN_KEYPRESS) {scaleFactor -= 0.1; refreshScreen();}
-	    else if ( cmd == ZOOMOUT_KEYPRESS) {scaleFactor += 0.1; refreshScreen();}
-	    // else if ( cmd == TOGGLE_BUILDING_KEYPRESS) {fill = !fill; refreshScreen();}
-	    else if ( cmd == X_KEYPRESS) {drawT = !drawT; refreshScreen();}
-	    else if ( cmd == C_KEYPRESS) {drawR = !drawR; refreshScreen();}
-	    else if ( cmd == R_KEYPRESS) {
+	    else if (cmd == RIGHT_KEYPRESS) {	left+= 20;refreshScreen();	}
+	    else if (cmd == UP_KEYPRESS ) {up += 20; refreshScreen();}
+	    else if (cmd == DOWN_KEYPRESS ) {up -= 20; refreshScreen();}
+	    else if (cmd == ZOOMIN_KEYPRESS) {scaleFactor -= 0.1; refreshScreen();}
+	    else if (cmd == ZOOMOUT_KEYPRESS) {scaleFactor += 0.1; refreshScreen();}
+	    else if (cmd == Z_KEYPRESS) {fill = !fill; refreshScreen();}
+	    else if (cmd == X_KEYPRESS) {drawT = !drawT; refreshScreen();}
+	    else if (cmd == C_KEYPRESS) {drawR = !drawR; refreshScreen();}
+	    else if (cmd == R_KEYPRESS) {
 	    	rotationDegree = (rotationDegree + 10) % 360;
-	    	refreshScreen();}
+	    	refreshScreen();
+		}
+		else if (cmd == V_KEYPRESS) {vKey = !vKey; refreshScreen();}
+		else if (cmd == LESSTHAN_KEYPRESS) {
+			if (currentColor == 0) {
+				currentColor = 3;
+			} else {
+				currentColor--;
+			}
+			refreshScreen();
+		}
+		else if (cmd == MORETHAN_KEYPRESS) {
+			if (currentColor == 3) {
+				currentColor = 0;
+			} else {
+				currentColor++;
+			}
+			refreshScreen();
+		}
 	}
 	return NULL;
 }
@@ -290,17 +334,24 @@ void programBarrier(){
 	while(1) {}
 }
 
+void initColors() {
+	colors[0] = setColor(255, 255, 255);
+	colors[1] = setColor(255, 0, 0);
+	colors[2] = setColor(0, 255, 0);
+	colors[3] = setColor(0, 0, 255);
+}
+
 int main() {
 	// polyType = malloc(10 * sizeof(int));
 	// polyPoints1 = malloc(10 * sizeof(Point));
 	// polyPoints2 = malloc(10 * sizeof(Point));
 	points = malloc(10 * sizeof(Point));
-	for (int i = 0; i < 10; i++) {
-		polygons[i] = (Point *)malloc(10 * sizeof(Point));
-	}
-	// polygonsP[i].
+	// for (int i = 0; i < 10; i++) {
+	// 	polygons[i] = (Point *)malloc(10 * sizeof(Point));
+	// }
 
 	initScreen();
+	initColors();
 	printBackground(setColor(0,0,0));
 
 	printBackground(setColor(0,0,0));
