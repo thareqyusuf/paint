@@ -341,6 +341,44 @@ void scaleDown() {
 	}
 }
 
+void rotatePolyLeft() {
+	for (int i = 0; i < polyCount; i++) {
+		if (isInside(left, up, polygonsP[i])) {
+			for (int j = 0; j < polygonsP[i].neff; j++) {
+				float s = sin(-10 * 3.14 / 180.0);
+				float c = cos(-10 * 3.14 / 180.0);
+				polygonsP[i].p[j].x -= left;
+				polygonsP[i].p[j].y -= up;
+
+				int xnew = (int) (polygonsP[i].p[j].x * c - polygonsP[i].p[j].y * s);
+				int ynew = (int) (polygonsP[i].p[j].x * s + polygonsP[i].p[j].y * c);
+
+				polygonsP[i].p[j].x = xnew + left;
+				polygonsP[i].p[j].y = ynew + up;
+			}
+		}
+	}
+}
+
+void rotatePolyRight() {
+	for (int i = 0; i < polyCount; i++) {
+		if (isInside(left, up, polygonsP[i])) {
+			for (int j = 0; j < polygonsP[i].neff; j++) {
+				float s = sin(-10 * 3.14 / 180.0);
+				float c = cos(-10 * 3.14 / 180.0);
+				polygonsP[i].p[j].x -= left;
+				polygonsP[i].p[j].y -= up;
+
+				int xnew = (int) (polygonsP[i].p[j].x * c - polygonsP[i].p[j].y * s);
+				int ynew = (int) (polygonsP[i].p[j].x * s + polygonsP[i].p[j].y * c);
+
+				polygonsP[i].p[j].x = xnew + left;
+				polygonsP[i].p[j].y = ynew + up;
+			}
+		}
+	}
+}
+
 
 
 //keypress listener in separate thread
@@ -380,6 +418,8 @@ void *keypressListen(void *x_void_ptr) {
 			refreshScreen();
 		} else if (cmd == O_KEYPRESS) {scaleDown(); refreshScreen();}
 		else if (cmd == P_KEYPRESS) {scaleUp(); refreshScreen();}
+		else if (cmd == E_KEYPRESS) {rotatePolyLeft(); refreshScreen();}
+		else if (cmd == R_KEYPRESS) {rotatePolyRight(); refreshScrenn();}
 	}
 	return NULL;
 }

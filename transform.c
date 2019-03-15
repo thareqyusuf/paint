@@ -23,9 +23,7 @@ Point* rotateMany(Point p, Point* p1, double angle, int length) {
   for (int i = 0; i < length; i++) {
     temp[i] = rotatePoint(p1[i], p, angle);
   }
-  return temp;
 }
-
 
 
 void ScaleLine(Point * p , double scalingFactorX , double scalingFactorY ){
