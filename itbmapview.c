@@ -196,7 +196,7 @@ void refreshScreen()
 	if (drawR) {
 
 		int cmd = getch();
-		if (cmd == TOGGLE_BUILDING_KEYPRESS) {
+		if (cmd == SPACE_KEYPRESS) {
 			if (pointCount == 0) {
 				points[pointCount] = makePoint(left, up);
 				pointCount++;
@@ -227,7 +227,7 @@ void refreshScreen()
 	if (drawT) {
 
 		int cmd = getch();
-	 	if (cmd == TOGGLE_BUILDING_KEYPRESS) {
+	 	if (cmd == SPACE_KEYPRESS) {
 			points[pointCount] = makePoint(left, up);
 			pointCount++;
 			if (pointCount == 3) {
@@ -276,9 +276,9 @@ void *keypressListen(void *x_void_ptr) {
 	    else if ( cmd == ZOOMIN_KEYPRESS) {scaleFactor -= 0.1; refreshScreen();}
 	    else if ( cmd == ZOOMOUT_KEYPRESS) {scaleFactor += 0.1; refreshScreen();}
 	    // else if ( cmd == TOGGLE_BUILDING_KEYPRESS) {fill = !fill; refreshScreen();}
-	    else if ( cmd == TOGGLE_ROADS_KEYPRESS) {drawT = !drawT; refreshScreen();}
-	    else if ( cmd == TOGGLE_TREES_KEYPRESS) {drawR = !drawR; refreshScreen();}
-	    else if ( cmd == ROTATE_KEYPRESS) {
+	    else if ( cmd == X_KEYPRESS) {drawT = !drawT; refreshScreen();}
+	    else if ( cmd == C_KEYPRESS) {drawR = !drawR; refreshScreen();}
+	    else if ( cmd == R_KEYPRESS) {
 	    	rotationDegree = (rotationDegree + 10) % 360;
 	    	refreshScreen();}
 	}
