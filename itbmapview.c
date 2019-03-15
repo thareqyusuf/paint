@@ -10,9 +10,8 @@
 
 typedef struct Polygons {
 	Color c;
-	Point *p;
+	Point p[10];
 	int neff;
-	Point center;
 } Polygon;
 
 double left = 0;
@@ -35,6 +34,7 @@ Point* polyPoints1;
 Point* polyPoints2;
 Point* points;
 Point* polygons[10];
+Polygon polygonsP[10];
 
 
 
@@ -177,11 +177,11 @@ void refreshScreen()
 
 
 	//DRAW ALL POLY
-	for (int i = 0; i< polyCount; i++) {
-		if (polyType[i] == 1) {
-			drawCircle(100, makePoint(polyPoints1[i].x, polyPoints1[i].y), 1, setColor(100, 100, 100));
-		}
-	}
+	// for (int i = 0; i< polyCount; i++) {
+	// 	if (polyType[i] == 1) {
+	// 		drawCircle(100, makePoint(polyPoints1[i].x, polyPoints1[i].y), 1, setColor(100, 100, 100));
+	// 	}
+	// }
 
 	//CEK PENGGUNAAN FITUR FILL
 	if (fill) {
@@ -200,6 +200,10 @@ void refreshScreen()
 		drawCircle(100, makePoint(left, up), 1, setColor(100, 100, 100));
 	}
 
+	for (int i = 0; i < 10; i++) {
+		drawPolygon(3, polygons[i], setColor(255, 255, 255), 1);
+	}
+
 	if (drawT) {
 
 		int cmd = getch();
@@ -212,13 +216,12 @@ void refreshScreen()
 				}
 				drawT = !drawT;
 				pointCount = 0;
+				polyCount++;
 			}
 		}
 	}
 
-	for (int i = 0; i < 10; i++) {
-		drawPolygon(3, polygons[i], setColor(255, 255, 255), 1);
-	}
+	
 
 	//CEK INPUT PRESSED
 
@@ -269,6 +272,7 @@ int main() {
 	for (int i = 0; i < 10; i++) {
 		polygons[i] = (Point *)malloc(10 * sizeof(Point));
 	}
+	// polygonsP[i].
 
 	initScreen();
 	printBackground(setColor(0,0,0));
