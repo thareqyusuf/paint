@@ -323,20 +323,20 @@ void refreshScreen()
 	
 }
 
-void scaleUp() {
+void zoomOut() {
 	for (int i = 0; i < polyCount; i++) {
 		for (int j = 0; j < polygonsP[i].neff; j++) {
-			polygonsP[i].p[j].x = polygonsP[i].p[j].x * 3 / 2;
-			polygonsP[i].p[j].y = polygonsP[i].p[j].y * 3 / 2;
+			polygonsP[i].p[j].x = polygonsP[i].p[j].x * 9 / 10;
+			polygonsP[i].p[j].y = polygonsP[i].p[j].y * 9 / 10;
 		}
 	}
 }
 
-void scaleDown() {
+void zoomIn() {
 	for (int i = 0; i < polyCount; i++) {
 		for (int j = 0; j < polygonsP[i].neff; j++) {
-			polygonsP[i].p[j].x = polygonsP[i].p[j].x * 2 / 3;
-			polygonsP[i].p[j].y = polygonsP[i].p[j].y * 2 / 3;
+			polygonsP[i].p[j].x = polygonsP[i].p[j].x * 10 / 9;
+			polygonsP[i].p[j].y = polygonsP[i].p[j].y * 10 / 9;
 		}
 	}
 }
@@ -379,6 +379,27 @@ void rotatePolyRight() {
 	}
 }
 
+void scaleDown() {
+	for (int i = 0; i < polyCount; i++) {
+		if (isInside(left, up, polygonsP[i])) {
+			for (int j = 0; j < polygonsP[i].neff; j++) {
+				polygonsP[i].p[j].x = polygonsP[i].p[j].x * 2 / 3;
+				polygonsP[i].p[j].y = polygonsP[i].p[j].y * 2 / 3;
+			}
+		}
+	}
+}
+
+void scaleUp() {
+	for (int i = 0; i < polyCount; i++) {
+		if (isInside(left, up, polygonsP[i])) {
+			for (int j = 0; j < polygonsP[i].neff; j++) {
+				polygonsP[i].p[j].x = polygonsP[i].p[j].x * 3 / 2;
+				polygonsP[i].p[j].y = polygonsP[i].p[j].y * 3 / 2;
+			}
+		}
+	}
+}
 
 
 //keypress listener in separate thread
@@ -416,10 +437,12 @@ void *keypressListen(void *x_void_ptr) {
 				currentColor++;
 			}
 			refreshScreen();
-		} else if (cmd == O_KEYPRESS) {scaleDown(); refreshScreen();}
-		else if (cmd == P_KEYPRESS) {scaleUp(); refreshScreen();}
+		} else if (cmd == O_KEYPRESS) {zoomOut(); refreshScreen();}
+		else if (cmd == P_KEYPRESS) {zoomIn(); refreshScreen();}
 		else if (cmd == E_KEYPRESS) {rotatePolyLeft(); refreshScreen();}
 		else if (cmd == R_KEYPRESS) {rotatePolyRight(); refreshScrenn();}
+		else if (cmd == K_KEYPRESS) {scaleDown(); refreshScreen();}
+		else if (cmd == L_KEYPRESS) {scaleUp(); refreshScreen();}
 	}
 	return NULL;
 }
