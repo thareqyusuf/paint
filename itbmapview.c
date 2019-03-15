@@ -21,6 +21,7 @@ int rotationDegree = 0;
 int rotationDegreeText = 0;
 int pointCount = 0;
 int pointColorCount = 0;
+double scaling = 1;
 unsigned char inputPress = 0;
 unsigned char fill = 0;
 unsigned char drawS = 0;
@@ -139,7 +140,7 @@ void refreshScreen()
 	viewingWindow[2] = makePoint(1000,550);
 	viewingWindow[3] = makePoint(1000,50);
 	
-	drawPolygon(4,viewingWindow,setColor(0,255,180),1);
+	// drawPolygon(4,viewingWindow,setColor(0,255,180),1);
 
 	//FITUR 1
 	Point featureWindow1[4];
@@ -276,6 +277,12 @@ void refreshScreen()
 		}
 	}
 
+	if (vKey) {
+		// scaling = scaling * ;
+		// vKey = !vKey;
+		// refreshScreen();
+	}
+
 	
 
 	//CEK INPUT PRESSED
@@ -288,6 +295,24 @@ void refreshScreen()
 	//raster_fill(scaleFactor*(100+up), scaleFactor*(200+up), scaleFactor*(100+left), scaleFactor*(200+left));
 
 	
+}
+
+void scaleUp() {
+	for (int i = 0; i < polyCount; i++) {
+		for (int j = 0; j < polygonsP[i].neff; j++) {
+			polygonsP[i].p[j].x = polygonsP[i].p[j].x * 3 / 2;
+			polygonsP[i].p[j].y = polygonsP[i].p[j].y * 3 / 2;
+		}
+	}
+}
+
+void scaleDown() {
+	for (int i = 0; i < polyCount; i++) {
+		for (int j = 0; j < polygonsP[i].neff; j++) {
+			polygonsP[i].p[j].x = polygonsP[i].p[j].x * 2 / 3;
+			polygonsP[i].p[j].y = polygonsP[i].p[j].y * 2 / 3;
+		}
+	}
 }
 
 
@@ -327,7 +352,8 @@ void *keypressListen(void *x_void_ptr) {
 				currentColor++;
 			}
 			refreshScreen();
-		}
+		} else if (cmd == O_KEYPRESS) {scaleDown(); refreshScreen();}
+		else if (cmd == P_KEYPRESS) {scaleUp(); refreshScreen();}
 	}
 	return NULL;
 }

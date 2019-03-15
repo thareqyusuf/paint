@@ -1,6 +1,6 @@
 #include "filling.h"
 
-char available[1000][700];
+char available[3840][2160];
 
 
 

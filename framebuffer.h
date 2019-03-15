@@ -13,7 +13,7 @@ long int screensize;
 char *fbp;
 int displayWidth, displayHeight;
 
-extern char available[1000][700];
+extern char available[3840][2160];
 
 //basic framebuffer primitive
 void init_avail();
