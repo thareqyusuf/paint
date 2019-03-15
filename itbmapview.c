@@ -200,8 +200,8 @@ void refreshScreen()
 		drawCircle(100, makePoint(left, up), 1, setColor(100, 100, 100));
 	}
 
-	for (int i = 0; i < 10; i++) {
-		drawPolygon(3, polygons[i], setColor(255, 255, 255), 1);
+	for (int i = 0; i < polyCount; i++) {
+		drawPolygon(polygonsP[i].neff, polygonsP[i].p, polygonsP[i].c, 1);
 	}
 
 	if (drawT) {
@@ -212,7 +212,10 @@ void refreshScreen()
 			pointCount++;
 			if (pointCount == 3) {
 				for (int i = 0; i < 3; i++) {
-					polygons[polyCount][i] = points[i];
+					// polygons[polyCount][i] = points[i];
+					polygonsP[polyCount].p[i] = points[i];
+					polygonsP[polyCount].neff = 3;
+					polygonsP[polyCount].c = setColor(255, 255, 255);
 				}
 				drawT = !drawT;
 				pointCount = 0;
