@@ -53,24 +53,24 @@ unsigned char isLineSane(int n, Point* line) {
 }
 
 void refreshFromFile (const char* filename, unsigned char isPoly, Color color) {
-	
+
 	FILE* fp = fopen(filename, "r");
 
 	ClippingWindow cw1 = setClippingWindow(scaleFactor*(100+left),scaleFactor*(200+left),scaleFactor*(200+up),scaleFactor*(100+up));
 	double xScalingFactor = (1000 - 500) / ( (scaleFactor*(200+left)) - (scaleFactor*(100+left)) );
 	double yScalingFactor = (550 - 50) / ( scaleFactor*((200+left)) - scaleFactor*((100+left)));
 	double xTranslation = (( (scaleFactor*(200+left)) * 500) - ( (scaleFactor*(100+left)) * 1000)) / ( (scaleFactor*(200+left)) - (scaleFactor*(100+left)));
-	double yTranslation = (( (scaleFactor*(200+up)) * 50) - ( (scaleFactor*(100+up)) * 550)) / ( (scaleFactor*(200+up)) - (scaleFactor*(100+up)) );	
+	double yTranslation = (( (scaleFactor*(200+up)) * 50) - ( (scaleFactor*(100+up)) * 550)) / ( (scaleFactor*(200+up)) - (scaleFactor*(100+up)) );
 
 	while(!feof(fp)){
-		
+
 		int nPoints;
 		fscanf(fp, "%d", &nPoints);
 		Point * points = malloc(nPoints * sizeof(Point));
 
-		
+
 		int j;
-		for(j = 0 ; j < nPoints ; j++) fscanf(fp, "%d %d", &points[j].x, &points[j].y); 
+		for(j = 0 ; j < nPoints ; j++) fscanf(fp, "%d %d", &points[j].x, &points[j].y);
 
 		if (isPoly) drawPolygon(j,points,color,1);
 		else drawPolyline(j,points,color,1);
@@ -110,7 +110,7 @@ int isInside(int x, int y, Polygon checkedPoly) {
 }
 
 //redraw framebuffer
-void refreshScreen() 
+void refreshScreen()
 {
 
 	printBackground(setColor(0,0,0));
@@ -124,11 +124,11 @@ void refreshScreen()
 	clippingWindow[2] = makePoint(scaleFactor*(1+left),scaleFactor*(1+up));
 	clippingWindow[3] = makePoint(scaleFactor*(1+left),scaleFactor*(0+up));
 	center = makePoint(scaleFactor*(0+left),scaleFactor*(150+up));
-	
+
 	drawPolygon(4,clippingWindow,colors[currentColor],4);
-	
+
 	Point viewingWindow[4];
-	
+
 	viewingWindow[0] = makePoint(50,50);
 	viewingWindow[1] = makePoint(50,550);
 	viewingWindow[2] = makePoint(1000,550);
@@ -136,7 +136,7 @@ void refreshScreen()
 
 	//Fitur DrawTriangle
 	Point featureWindow2[4];
-	
+
 	featureWindow2[0] = makePoint(120,60);
 	featureWindow2[1] = makePoint(120,110);
 	featureWindow2[2] = makePoint(170,110);
@@ -146,12 +146,12 @@ void refreshScreen()
 	} else {
 		drawPolygon(4,featureWindow2,setColor(0,255,180),1);
 	}
-	
-	
+
+
 
 	//Fitur DrawRectangle
 	Point featureWindow3[4];
-	
+
 	featureWindow3[0] = makePoint(180,60);
 	featureWindow3[1] = makePoint(180,110);
 	featureWindow3[2] = makePoint(230,110);
@@ -194,7 +194,7 @@ void refreshScreen()
 
 				if (pointCount == 4) {
 					for (int i = 0; i < pointCount; i++) {
-						
+
 						polygonsP[polyCount].p[i] = points[i];
 						polygonsP[polyCount].neff = pointCount;
 						polygonsP[polyCount].c = colors[currentColor];
@@ -316,11 +316,23 @@ void scaleUp() {
 	}
 }
 
+void saveFile(){
+	ofstream wfile("save_paint.txt");
+
+	for (int i = 0; i < polyCount; i++){
+		for (int j = 0; j < polygonsP[i].neff; j++) {
+			wfile << polygonsP[i].p[j].x << " " << polygonsP[i].p[j].y;
+		}
+		wfile << polygonsP[i].c.R << " " << polygonsP[i].c.G << " " << polygonsP[i].c.B << endl;
+	}
+
+	wfile.close();
+}
 
 //keypress listener in separate thread
 void *keypressListen(void *x_void_ptr) {
 	 int cmd = ' ';
-	 while (1) 
+	 while (1)
 	 {
 	 	cmd = getch();
 	 	if (cmd == LEFT_KEYPRESS) { left -= 20; refreshScreen();}
@@ -357,6 +369,7 @@ void *keypressListen(void *x_void_ptr) {
 		else if (cmd == R_KEYPRESS) {rotatePolyRight(); refreshScrenn();}
 		else if (cmd == K_KEYPRESS) {scaleDown(); refreshScreen();}
 		else if (cmd == L_KEYPRESS) {scaleUp(); refreshScreen();}
+		else if (cmd == S_KEYPRESS) {saveFile(); refreshScreen();}
 	}
 	return NULL;
 }
