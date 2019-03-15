@@ -34,7 +34,7 @@ int* polyType;
 Point* polyPoints1;
 Point* polyPoints2;
 Point* points;
-Polygon* polygons;
+Point* polygons[10];
 
 
 
@@ -207,13 +207,17 @@ void refreshScreen()
 			points[pointCount] = makePoint(left, up);
 			pointCount++;
 			if (pointCount == 3) {
-				drawPolygon(3, points, setColor(255, 255, 255), 1);
+				for (int i = 0; i < 3; i++) {
+					polygons[polyCount][i] = points[i];
+				}
 				drawT = !drawT;
 				pointCount = 0;
 			}
-			refreshScreen();
 		}
+	}
 
+	for (int i = 0; i < 10; i++) {
+		drawPolygon(3, polygons[i], setColor(255, 255, 255), 1);
 	}
 
 	//CEK INPUT PRESSED
@@ -262,6 +266,10 @@ int main() {
 	// polyPoints1 = malloc(10 * sizeof(Point));
 	// polyPoints2 = malloc(10 * sizeof(Point));
 	points = malloc(10 * sizeof(Point));
+	for (int i = 0; i < 10; i++) {
+		polygons[i] = (Point *)malloc(10 * sizeof(Point));
+	}
+
 	initScreen();
 	printBackground(setColor(0,0,0));
 
