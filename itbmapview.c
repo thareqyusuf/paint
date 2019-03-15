@@ -243,6 +243,7 @@ void refreshScreen()
 					}
 					pointCount = 0;
 					polyCount++;
+					drawR = !drawR;
 					refreshScreen();
 				}
 			}
@@ -268,6 +269,7 @@ void refreshScreen()
 					}
 				pointCount = 0;
 				polyCount++;
+				drawT = !drawT;
 				refreshScreen();
 			}
 		}
