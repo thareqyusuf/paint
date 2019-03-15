@@ -26,9 +26,9 @@ unsigned char fill = 0;
 unsigned char drawS = 0;
 unsigned char drawR = 0;
 unsigned char drawT = 0;
+
 unsigned char vKey = 0;
 pthread_t keypressListener;
-
 
 int polyCount = 0;
 int* polyType;
@@ -107,6 +107,34 @@ void refreshFromFile (const char* filename, unsigned char isPoly, Color color) {
 	close(fileno(fp));
 }
 
+int isInside(int x, int y, Polygon checkedPoly) {
+	int maxY = 0;
+	int maxX = 0;
+	int minY = 99999;
+	int minX = 99999;
+	for (int i = 0; i < checkedPoly.neff; i++) {
+		if (maxX < checkedPoly.p[i].x) {
+			maxX = checkedPoly.p[i].x;
+		}
+		if (minX > checkedPoly.p[i].x) {
+			minX = checkedPoly.p[i].x;
+		}
+		if (maxY < checkedPoly.p[i].y) {
+			maxY = checkedPoly.p[i].y;
+		}
+		if (minY > checkedPoly.p[i].y) {
+			minY = checkedPoly.p[i].y;
+		}
+
+	}
+
+	if (maxX >= x && minX <= x && minY <= y && maxY >= y) {
+		return 1;
+	} else {
+		return 0;
+	}
+
+}
 
 //redraw framebuffer
 void refreshScreen() 
@@ -168,6 +196,8 @@ void refreshScreen()
 		drawPolygon(4,featureWindow2,setColor(0,255,180),1);
 	}
 	
+	
+
 	//Fitur 3
 	Point featureWindow3[4];
 	
@@ -273,6 +303,18 @@ void refreshScreen()
 				refreshScreen();
 			}
 		}
+	}
+
+	if (vKey) {
+		int cmd = getch();
+
+	 	if (cmd == SPACE_KEYPRESS) {
+			 while(1<2){
+				 /* code */
+			 }
+			 
+		}
+
 	}
 
 	
