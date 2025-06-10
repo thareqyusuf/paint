@@ -317,16 +317,23 @@ void scaleUp() {
 }
 
 void saveFile(){
-	ofstream wfile("save_paint.txt");
+	FILE *wfile = fopen("save_paint.txt", "w");
+	if (wfile == NULL) {
+		printf("Error opening file for writing\n");
+		return;
+	}
+
 
 	for (int i = 0; i < polyCount; i++){
 		for (int j = 0; j < polygonsP[i].neff; j++) {
-			wfile << polygonsP[i].p[j].x << " " << polygonsP[i].p[j].y;
+			fprintf(wfile, "%d %d", polygonsP[i].p[j].x, polygonsP[i].p[j].y);
+
+
 		}
-		wfile << polygonsP[i].c.R << " " << polygonsP[i].c.G << " " << polygonsP[i].c.B << endl;
+		fprintf(wfile, "%d %d %d\n", polygonsP[i].c.R, polygonsP[i].c.G, polygonsP[i].c.B);
 	}
 
-	wfile.close();
+	fclose(wfile);
 }
 
 //keypress listener in separate thread
