@@ -1,8 +1,5 @@
 #include "filling.h"
 
-char available[3840][2160];
-
-
 
 /*
 Procedure floodfill

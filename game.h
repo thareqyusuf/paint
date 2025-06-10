@@ -5,7 +5,6 @@
 #include "color.h"
 #include "transform.h"
 
-Point explosionPoint[11];
 int planeloc;
 int endSign;
 void buildCannon(int x, int y, Color c);

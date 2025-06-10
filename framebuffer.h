@@ -6,12 +6,14 @@
 #include "grafika.h"
 
 
-int fbfd;
-struct fb_var_screeninfo vinfo;
-struct fb_fix_screeninfo finfo;
-long int screensize;
-char *fbp;
-int displayWidth, displayHeight;
+extern int displayHeight;
+extern int displayWidth;
+extern char *fbp;
+extern long int screensize;
+extern struct fb_fix_screeninfo finfo;
+extern struct fb_var_screeninfo vinfo;
+extern int fbfd;
+extern Point explosionPoint[11];
 
 extern char available[3840][2160];
 
