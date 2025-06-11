@@ -216,3 +216,52 @@ struct color_rgba get_pixel_color_at_position(int x_coordinate, int y_coordinate
 void terminate_framebuffer_system(void) {
     terminate();
 }
+
+// Additional function implementations
+int initialize_framebuffer_system(void) {
+    return initScreen();
+}
+
+void terminate_framebuffer_system(void) {
+    terminate();
+}
+
+struct color_rgba create_rgba_color(int red, int green, int blue) {
+    struct color_rgba color;
+    color.R = (uint8_t)red;
+    color.G = (uint8_t)green;
+    color.B = (uint8_t)blue;
+    color.A = 255;
+    return color;
+}
+
+int are_colors_similar(struct color_rgba first_color, struct color_rgba second_color) {
+    return (first_color.R == second_color.R && 
+            first_color.G == second_color.G && 
+            first_color.B == second_color.B);
+}
+
+// Additional missing function implementations
+struct coordinate_point create_coordinate_point(int x, int y) {
+    struct coordinate_point point;
+    point.x_coordinate = x;
+    point.y_coordinate = y;
+    return point;
+}
+
+void draw_filled_polygon(int vertex_count, struct coordinate_point *vertex_array, 
+                        struct color_rgba fill_color, int outline_thickness) {
+    // Simple polygon fill - just draw lines between vertices
+    for (int i = 0; i < vertex_count; i++) {
+        int next = (i + 1) % vertex_count;
+        draw_line_between_points(vertex_array[i], vertex_array[next], fill_color, outline_thickness);
+    }
+}
+
+void draw_connected_polyline(int point_count, struct coordinate_point* coordinate_array, 
+                           struct color_rgba line_color, int line_thickness) {
+    // Draw connected lines
+    for (int i = 0; i < point_count - 1; i++) {
+        draw_line_between_points(coordinate_array[i], coordinate_array[i+1], line_color, line_thickness);
+    }
+}

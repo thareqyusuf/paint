@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 #include "transform.h"
 #include <math.h>
 #include <stdlib.h>

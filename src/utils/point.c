@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 
 struct coordinate_point create_coordinate_point(int x_coordinate, int y_coordinate) {
     struct coordinate_point point;

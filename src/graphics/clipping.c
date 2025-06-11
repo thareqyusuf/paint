@@ -1,4 +1,4 @@
-#include "../../include/line_clipping.h"
+#include "framebuffer.h"
 #include "clipping.h"
 #include <stdio.h>
 

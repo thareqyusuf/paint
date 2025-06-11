@@ -1,4 +1,4 @@
-#include "../../include/geometric_primitives.h"
+#include "framebuffer.h"
 #include "geometry.h"
 #include <stdlib.h>
 

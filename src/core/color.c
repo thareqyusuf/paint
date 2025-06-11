@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 #include <stdlib.h>
 
 struct color_rgba create_rgba_color(int red, int green, int blue) {

@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 #include "physics.h"
 #include <stdlib.h>
 

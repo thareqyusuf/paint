@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 /**
  * @file paint_simple.c
  * @brief Simplified main application using existing function names

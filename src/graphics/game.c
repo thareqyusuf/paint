@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 #include <unistd.h>
 #include "game.h"
 

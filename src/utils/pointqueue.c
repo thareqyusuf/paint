@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 #include "pointqueue.h"
 #include <stdio.h>
 #include <stdlib.h>

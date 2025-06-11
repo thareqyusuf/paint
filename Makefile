@@ -14,7 +14,7 @@ OBJDIR = $(BUILDDIR)/obj
 
 # Source files organized by module
 CORE_SOURCES = $(SRCDIR)/core/paint.c $(SRCDIR)/core/framebuffer.c $(SRCDIR)/core/color.c
-GRAPHICS_SOURCES = $(SRCDIR)/graphics/geometry.c $(SRCDIR)/graphics/filling.c $(SRCDIR)/graphics/clipping.c $(SRCDIR)/graphics/transform.c $(SRCDIR)/graphics/game.c
+GRAPHICS_SOURCES = src/graphics/minimal_geometry.c $(SRCDIR)/graphics/geometry.c $(SRCDIR)/graphics/filling.c $(SRCDIR)/graphics/clipping.c $(SRCDIR)/graphics/transform.c $(SRCDIR)/graphics/game.c
 INPUT_SOURCES = $(SRCDIR)/input/keypress.c
 PHYSICS_SOURCES = $(SRCDIR)/physics/physics.c
 UTILS_SOURCES = $(SRCDIR)/utils/point.c $(SRCDIR)/utils/pointqueue.c $(SRCDIR)/utils/grafika.c

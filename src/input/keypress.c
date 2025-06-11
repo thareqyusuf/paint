@@ -1,3 +1,4 @@
+#include "framebuffer.h"
 #include "../../include/keyboard_input.h"
 #include "keypress.h"
 #include <stdio.h>
@@ -16,4 +17,8 @@ int getch(void) {
 // Bridge function for new interface compatibility
 int get_next_keyboard_input(void) {
     return getch();
+}
+
+int get_next_keyboard_input(void) {
+    return getch();  // Use existing getch function
 }
