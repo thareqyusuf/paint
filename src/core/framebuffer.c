@@ -1,3 +1,5 @@
+#include "../../include/color_operations.h"
+#include "../../include/framebuffer_interface.h"
 #include "framebuffer.h"
 #include <unistd.h>
 
@@ -182,4 +184,26 @@ Closing the framebuffer connection
 void terminate(){
     munmap(fbp, screensize);
     close(fbfd);
+}
+// Bridge functions for new interface compatibility
+int initialize_framebuffer_system(void) {
+    initScreen();
+    return 0;
+}
+
+void fill_background_color(struct color_rgba background_color) {
+    printBackground(background_color);
+}
+
+void set_pixel_with_thickness(int thickness, int x_coordinate, int y_coordinate, 
+                             struct color_rgba pixel_color) {
+    setXY(thickness, x_coordinate, y_coordinate, pixel_color);
+}
+
+struct color_rgba get_pixel_color_at_position(int x_coordinate, int y_coordinate) {
+    return getXY(x_coordinate, y_coordinate);
+}
+
+void terminate_framebuffer_system(void) {
+    terminate();
 }

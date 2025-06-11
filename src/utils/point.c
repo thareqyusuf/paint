@@ -1,10 +1,13 @@
-#include "point.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "../../include/coordinate_system.h"
 
-Point makePoint(int x, int y) {
-    Point p;
-    p.x = x;
-    p.y = y;
-    return p;
+struct coordinate_point create_coordinate_point(int x_coordinate, int y_coordinate) {
+    struct coordinate_point point;
+    point.x_position = x_coordinate;
+    point.y_position = y_coordinate;
+    return point;
+}
+
+// Legacy function name compatibility
+struct coordinate_point makePoint(int x, int y) {
+    return create_coordinate_point(x, y);
 }

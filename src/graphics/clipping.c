@@ -1,3 +1,4 @@
+#include "../../include/line_clipping.h"
 #include "clipping.h"
 #include <stdio.h>
 
@@ -225,4 +226,22 @@ void clipLine(LineAnalysisResult lar1, ClippingWindow cw1 , Point * output) {
 		output[1] = makePoint(lar1.endPoint.x, lar1.endPoint.y);
 
 	}
+}
+// Bridge functions for new interface compatibility
+struct clipping_boundary create_clipping_window(int left, int right, int top, int bottom) {
+    struct clipping_boundary boundary;
+    boundary.left_boundary = left;
+    boundary.right_boundary = right;
+    boundary.top_boundary = top;
+    boundary.bottom_boundary = bottom;
+    return boundary;
+}
+
+struct viewport_region_code initialize_empty_region_code(void) {
+    struct viewport_region_code code;
+    code.left_region = 0;
+    code.right_region = 0;
+    code.top_region = 0;
+    code.bottom_region = 0;
+    return code;
 }

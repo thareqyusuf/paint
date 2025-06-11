@@ -3,7 +3,7 @@
 # Compiler and flags
 CC = gcc
 CFLAGS = -O2 -lm -std=gnu99 -w -Iinclude
-LDFLAGS = -lpthread
+LDFLAGS = -lpthread -lm
 DEBUG_FLAGS = -g -DDEBUG -Wall -Wextra
 
 # Directories

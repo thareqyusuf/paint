@@ -1,3 +1,5 @@
+#include "../../include/framebuffer_interface.h"
+#include "../../include/geometric_primitives.h"
 #include "geometry.h"
 #include <stdlib.h>
 
@@ -291,4 +293,37 @@ void drawRect(int x, int y, int w, int h, Color c) {
       setXY(1, x+i, y+j, c);
     }
   }
+}
+// Bridge functions for new interface compatibility
+void draw_line_between_points(struct coordinate_point start_point, 
+                             struct coordinate_point end_point,
+                             struct color_rgba line_color, 
+                             int line_thickness) {
+    drawBresenhamLine(start_point, end_point, line_color, line_thickness);
+}
+
+void draw_connected_polyline(int vertex_count, struct coordinate_point *vertex_array, 
+                            struct color_rgba line_color, int line_thickness) {
+    drawPolyline(vertex_count, vertex_array, line_color, line_thickness);
+}
+
+void draw_filled_polygon(int vertex_count, struct coordinate_point *vertex_array, 
+                        struct color_rgba fill_color, int outline_thickness) {
+    drawPolygon(vertex_count, vertex_array, fill_color, outline_thickness);
+}
+
+void draw_circle_outline(int radius, struct coordinate_point center_point, 
+                        int line_thickness, struct color_rgba circle_color) {
+    drawCircle(radius, center_point, line_thickness, circle_color);
+}
+
+void draw_semicircle_outline(int radius, struct coordinate_point center_point, 
+                            int line_thickness, struct color_rgba circle_color) {
+    drawCircleHalf(radius, center_point, line_thickness, circle_color);
+}
+
+void draw_filled_rectangle(int top_left_x, int top_left_y, 
+                          int rectangle_width, int rectangle_height,
+                          struct color_rgba fill_color) {
+    drawRect(top_left_x, top_left_y, rectangle_width, rectangle_height, fill_color);
 }
