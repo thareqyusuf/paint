@@ -1,16 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <sys/mman.h>
-#include <sys/ioctl.h>
-#include <pthread.h>
-#include <sys/time.h>
-
-// Include our unified headers
+#include "../../include/color_operations.h"
+#include "../../include/framebuffer_interface.h"
 #include "framebuffer.h"
-
+#include <unistd.h>
 
 int fbfd = 0;
 struct fb_var_screeninfo vinfo;

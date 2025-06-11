@@ -1,4 +1,3 @@
-#include "../../include/legacy_compatibility.h"
 /**
  * @file paint.c
  * @brief Main framebuffer graphics application with real-time drawing capabilities
@@ -17,9 +16,7 @@
 #include <pthread.h>
 
 #include "../../include/graphics_engine.h"
-#include "../../include/color_operations.h"
 #include "../../include/geometric_primitives.h"
-#include "../../include/framebuffer_interface.h"
 #include "../../include/transformation_matrix.h"
 #include "../../include/area_fill_algorithms.h"
 #include "../../include/line_clipping.h"

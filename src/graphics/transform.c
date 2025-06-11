@@ -1,4 +1,3 @@
-#include "../../include/legacy_compatibility.h"
 #include "transform.h"
 #include <math.h>
 #include <stdlib.h>

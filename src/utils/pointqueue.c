@@ -1,4 +1,3 @@
-#include "../../include/legacy_compatibility.h"
 #include "pointqueue.h"
 #include <stdio.h>
 #include <stdlib.h>

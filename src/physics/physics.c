@@ -1,4 +1,3 @@
-#include "../../include/legacy_compatibility.h"
 #include "physics.h"
 #include <stdlib.h>
 

@@ -3,7 +3,6 @@
  * @brief Simplified main application using existing function names
  */
 
-#include "../../include/legacy_compatibility.h"
 #include "../../include/graphics_engine.h"
 #include <stdio.h>
 #include <stdlib.h>

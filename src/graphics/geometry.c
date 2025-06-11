@@ -1,5 +1,3 @@
-#include "../../include/legacy_compatibility.h"
-#include "../../include/framebuffer_interface.h"
 #include "../../include/geometric_primitives.h"
 #include "geometry.h"
 #include <stdlib.h>

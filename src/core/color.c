@@ -1,5 +1,3 @@
-#include "../../include/legacy_compatibility.h"
-#include "../../include/color_operations.h"
 #include <stdlib.h>
 
 struct color_rgba create_rgba_color(int red, int green, int blue) {
