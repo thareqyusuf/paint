@@ -23,17 +23,24 @@
           
           shellHook = ''
             echo "=== Framebuffer Paint Development Environment ==="
-            echo "To build: make"
-            echo "To run: sudo ./paint (requires framebuffer access)"
+            echo "Project structure:"
+            echo "  src/     - Source code organized by functionality"
+            echo "  include/ - Header files"
+            echo "  examples/- Example drawings and data files"
             echo ""
-            echo "Make sure to run from TTY (Ctrl+Alt+F2) for framebuffer access"
-            echo "Or enable framebuffer with: sudo modprobe vfb"
+            echo "Commands:"
+            echo "  make          - Build the application"
+            echo "  make debug    - Build with debug info"
+            echo "  make clean    - Clean build artifacts"
+            echo "  make help     - Show all available targets"
+            echo ""
+            echo "To run: Switch to TTY (Ctrl+Alt+F2) and run 'sudo ./paint'"
           '';
         };
 
         packages.default = pkgs.stdenv.mkDerivation {
-          pname = "paint";
-          version = "0.1.0";
+          pname = "framebuffer-paint";
+          version = "1.0.0";
           
           src = ./.;
           
@@ -49,8 +56,9 @@
           '';
           
           meta = with pkgs.lib; {
-            description = "Framebuffer-based paint application";
+            description = "Framebuffer-based paint application with geometric drawing tools";
             platforms = platforms.linux;
+            license = licenses.mit; # Change as appropriate
           };
         };
       });

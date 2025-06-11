@@ -1,14 +1,28 @@
-itbmapviewer
 # Build artifacts
 paint
+itbmapview
 *.o
+*.so
+*.a
+
+# Build directory
+build/
+
+# IDE files
+.vscode/
+*.swp
+*.swo
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
 
 # Nix artifacts
 result
 result-*
 .direnv/
 
-# IDE files
-.vscode/
-*.swp
-*.swo
+# Generated files
+save_paint.txt
+output.txt
