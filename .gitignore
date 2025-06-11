@@ -1,1 +1,14 @@
 itbmapviewer
+# Build artifacts
+paint
+*.o
+
+# Nix artifacts
+result
+result-*
+.direnv/
+
+# IDE files
+.vscode/
+*.swp
+*.swo
