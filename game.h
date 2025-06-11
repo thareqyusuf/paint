@@ -4,9 +4,12 @@
 #include "point.h"
 #include "color.h"
 #include "transform.h"
+#include "geometry.h"
+#include "filling.h"
+#include "framebuffer.h"
 
-int planeloc;
-int endSign;
+extern int planeloc;
+extern int endSign;
 void buildCannon(int x, int y, Color c);
 void shootCannon();
 void drawBaling(int x, int y, int rotation);

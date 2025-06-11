@@ -1,5 +1,5 @@
 #include "color.h"
-
+#include <stdlib.h>
 
 Color setColor(int r, int g, int b){
     Color X;

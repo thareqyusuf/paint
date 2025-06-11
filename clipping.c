@@ -1,4 +1,5 @@
 #include "clipping.h"
+#include <stdio.h>
 
 ClippingWindow setClippingWindow(int left, int right, int top, int bottom){
 	ClippingWindow temp;

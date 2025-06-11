@@ -1,4 +1,6 @@
 #include "transform.h"
+#include <math.h>
+#include <stdlib.h>
 
 #define PI acos(-1)
 

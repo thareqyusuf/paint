@@ -3,7 +3,8 @@
 
 #include "point.h"
 #include "color.h"
-#include "math.h"
+#include "geometry.h"
+#include <math.h>
 
 #define IS_COMPLETELY_INSIDE 1
 #define IS_COMPLETELY_OUTSIDE 2
@@ -12,7 +13,6 @@
 #define BOTHONE 5
 #define ONEZERO 6
 
-
 typedef struct
 {
 	int xLeft;
@@ -20,7 +20,6 @@ typedef struct
 	int yTop;
 	int yBottom;
 } ClippingWindow;
-
 
 typedef struct
 {
@@ -45,7 +44,6 @@ typedef struct
 	RegionCode endPointRegionCode;
 } LineAnalysisResult;
 
-
 ClippingWindow setClippingWindow(int left, int right, int top, int bottom);
 RegionCode initRegionCode();
 RegionCode computeRegionCode(Point p, ClippingWindow cw);
@@ -57,7 +55,5 @@ int isPointCompletelyInside(RegionCode x);
 int isCompletelyInside(LineAnalysisResult x);
 int isCompletelyOutside(LineAnalysisResult x);
 void clipLine(LineAnalysisResult lar1, ClippingWindow cw1 , Point * output);
-
-
 
 #endif

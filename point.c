@@ -1,4 +1,6 @@
 #include "point.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 Point makePoint(int x, int y) {
     Point p;

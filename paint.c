@@ -30,6 +30,9 @@ unsigned char drawT = 0;
 
 pthread_t keypressListener;
 
+int planeloc = 0;
+int endSign = 0;
+
 int polyCount = 0;
 Point* points;
 Polygon polygonsP[10];
@@ -167,7 +170,7 @@ void refreshScreen()
 
 	for (int i = 0; i < 10; i++) {
 		drawPolygon(polygonsP[i].neff, polygonsP[i].p, polygonsP[i].c, 1);
-		flood(pointsColor[i].x, pointsColor[i].y, pointsColorChoice[i], setColor(0, 0, 0));
+		//flood(pointsColor[i].x, pointsColor[i].y, pointsColorChoice[i], setColor(0, 0, 0));
 	}
 
 	//CEK PENGGUNAAN FITUR FILL
@@ -200,8 +203,8 @@ void refreshScreen()
 						polygonsP[polyCount].c = colors[currentColor];
 					}
 					for (int i = 0; i < pointCount; i++) {
-						points[i].x = NULL;
-						points[i].y = NULL;
+						points[i].x = 0;
+						points[i].y = 0;
 					}
 					pointCount = 0;
 					polyCount++;
@@ -225,8 +228,8 @@ void refreshScreen()
 					polygonsP[polyCount].c = colors[currentColor];
 				}
 				for (int i = 0; i < pointCount; i++) {
-						points[i].x = NULL;
-						points[i].y = NULL;
+						points[i].x = 0;
+						points[i].y = 0;
 					}
 				pointCount = 0;
 				polyCount++;
@@ -373,7 +376,7 @@ void *keypressListen(void *x_void_ptr) {
 		} else if (cmd == O_KEYPRESS) {zoomOut(); refreshScreen();}
 		else if (cmd == P_KEYPRESS) {zoomIn(); refreshScreen();}
 		else if (cmd == E_KEYPRESS) {rotatePolyLeft(); refreshScreen();}
-		else if (cmd == R_KEYPRESS) {rotatePolyRight(); refreshScrenn();}
+		else if (cmd == R_KEYPRESS) {rotatePolyRight(); refreshScreen();}
 		else if (cmd == K_KEYPRESS) {scaleDown(); refreshScreen();}
 		else if (cmd == L_KEYPRESS) {scaleUp(); refreshScreen();}
 		else if (cmd == S_KEYPRESS) {saveFile(); refreshScreen();}

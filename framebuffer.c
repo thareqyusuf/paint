@@ -1,4 +1,5 @@
 #include "framebuffer.h"
+#include <unistd.h>
 
 int fbfd = 0;
 struct fb_var_screeninfo vinfo;

@@ -1,4 +1,5 @@
 #include "keypress.h"
+#include <stdio.h>
 
 int getch(void) {
     struct termios oldattr, newattr;

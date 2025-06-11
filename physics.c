@@ -1,4 +1,5 @@
 #include "physics.h"
+#include <stdlib.h>
 
 #define GRAVITY 8
 #define DRAG 4

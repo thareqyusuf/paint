@@ -1,4 +1,5 @@
 #include "geometry.h"
+#include <stdlib.h>
 
 
 /*Gambar explosion masih jelek*/

@@ -1,5 +1,6 @@
 #include "pointqueue.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 
 //queue
 void initQueue(queue* q) {
