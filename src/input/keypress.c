@@ -1,3 +1,4 @@
+#include "../../include/legacy_compatibility.h"
 #include "../../include/keyboard_input.h"
 #include "keypress.h"
 #include <stdio.h>

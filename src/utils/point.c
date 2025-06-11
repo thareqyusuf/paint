@@ -1,3 +1,4 @@
+#include "../../include/legacy_compatibility.h"
 #include "../../include/coordinate_system.h"
 
 struct coordinate_point create_coordinate_point(int x_coordinate, int y_coordinate) {

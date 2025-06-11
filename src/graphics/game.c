@@ -1,3 +1,4 @@
+#include "../../include/legacy_compatibility.h"
 #include <unistd.h>
 #include "game.h"
 

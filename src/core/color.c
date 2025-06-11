@@ -1,3 +1,4 @@
+#include "../../include/legacy_compatibility.h"
 #include "../../include/color_operations.h"
 #include <stdlib.h>
 

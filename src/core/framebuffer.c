@@ -1,3 +1,4 @@
+#include "../../include/legacy_compatibility.h"
 #include "../../include/color_operations.h"
 #include "../../include/framebuffer_interface.h"
 #include "framebuffer.h"

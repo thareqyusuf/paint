@@ -1,3 +1,4 @@
+#include "../../include/legacy_compatibility.h"
 #include "../../include/line_clipping.h"
 #include "clipping.h"
 #include <stdio.h>

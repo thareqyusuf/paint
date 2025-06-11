@@ -1,3 +1,4 @@
+#include "../../include/legacy_compatibility.h"
 /**
  * @file paint.c
  * @brief Main framebuffer graphics application with real-time drawing capabilities
